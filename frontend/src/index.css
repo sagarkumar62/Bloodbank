@@ -12,8 +12,8 @@
 .fade-in{
     position: absolute;
     width: 100%;
-    height: 100%;
-    background-color: #000;
+    height: 110%;
+    background-color: #7F1D1D	;
     top: 0;
     right: 0;
     animation: heartRateIn 2.5s linear infinite;
@@ -22,14 +22,14 @@
 .fade-out{
     position: absolute;
     width: 120%;
-    height: 100%;
-    background-color: #000;
+    height: 110%;
+    background-color: #7F1D1D	;
     top: 0;
     right: -120%;
     animation: heartRateOut 2.5s linear infinite;
-    background: rgba(0, 0, 0, 1);
-    background: linear-gradient(to right,rgba(0,0,0,1)0%, rgba(0,0,0,1)80%,rgba(0,0,0,0)100%);
-    }
+    background: rgba(127, 29, 29, 1);
+    background: linear-gradient(to right, rgba(127, 29, 29, 1) 0%, rgba(127, 29, 29, 1)80%, rgba(127, 29, 29, 1) 100%);
+}
     
 @keyframes heartRateIn{
         0%{
