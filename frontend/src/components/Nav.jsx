@@ -4,7 +4,7 @@ import Button from "./Button";
 const Nav = () => {
   return (
     <div>
-      <nav className="w-full py-1 px-8 bg-black rounded flex items-center justify-between">
+      <nav className="w-full py-1 px-8 bg-black flex items-center justify-between">
         <div className="part1 ">
           <div class="heart-rate ">
             <svg
