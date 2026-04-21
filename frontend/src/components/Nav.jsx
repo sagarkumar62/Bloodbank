@@ -1,5 +1,8 @@
 import React, { useRef, useState } from "react";
 import Button from "./Button";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store/reducer/usersSlice";
 import { HiMenu, HiX } from "react-icons/hi";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -35,12 +38,15 @@ const Nav = () => {
     }
   };
 
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.users || {});
+
   return (
     <div>
-      <nav className="w-full py-4 px-6 bg-[#7F1D1D] flex items-center justify-between">
+      <nav className="w-full py-4  px-6 bg-[#7F1D1D] flex z-[999] items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <div className="heart-rate">
+            <div className="heart-rate">
             <svg
               version="1.0"
               xmlns="http://www.w3.org/2000/svg"
@@ -61,20 +67,42 @@ const Nav = () => {
                 points="0,45.486 38.514,45.486 44.595,33.324 50.676,45.486 57.771,45.486 62.838,55.622 71.959,9 80.067,63.729 84.122,45.486 97.297,45.486 103.379,40.419 110.473,45.486 150,45.486"
               />
             </svg>
-            <div class="fade-in"></div>
+            <div className="fade-in"></div>
 
-            <div class="fade-out"></div>
+            <div className="fade-out"></div>
           </div>
         </div>
 
         {/* Desktop and Tablet Menu */}
         <div className="hidden md:flex gap-8 items-center text-white">
           {menuItems.map((item, idx) => (
-            <h4 key={idx} className="font-medium cursor-pointer hover:underline">
-              {item}
-            </h4>
+            item === "Home" ? (
+              <Link key={idx} to="/">
+                <h4 className="font-medium cursor-pointer hover:underline">
+                  {item}
+                </h4>
+              </Link>
+            ) : item === "Donate" ? (
+              <Link key={idx} to="/donate">
+                <h4 className="font-medium cursor-pointer hover:underline">
+                  {item}
+                </h4>
+              </Link>
+            ) : (
+              <h4 key={idx} className="font-medium cursor-pointer hover:underline">
+                {item}
+              </h4>
+            )
           ))}
-          <Button text={"Register"} />
+          {isLoggedIn ? (
+            <button onClick={() => dispatch(logout())} className="px-4 py-2">
+              <span className="text-white font-medium">Logout</span>
+            </button>
+          ) : (
+            <Link to="/register">
+              <Button text={"Register"} />
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Icon */}
@@ -94,16 +122,38 @@ const Nav = () => {
       >
         <div className="flex flex-col px-6 py-8 gap-4">
           {menuItems.map((item, idx) => (
-            <h4
-              key={idx}
-              className="font-medium cursor-pointer text-lg"
-              onClick={() => setMenuOpen(false)}
-            >
-              {item}
-            </h4>
+            item === "Home" ? (
+              <Link key={idx} to="/" onClick={() => setMenuOpen(false)}>
+                <h4 className="font-medium cursor-pointer text-lg">
+                  {item}
+                </h4>
+              </Link>
+            ) : item === "Donate" ? (
+              <Link key={idx} to="/donate" onClick={() => setMenuOpen(false)}>
+                <h4 className="font-medium cursor-pointer text-lg">
+                  {item}
+                </h4>
+              </Link>
+            ) : (
+              <h4
+                key={idx}
+                className="font-medium cursor-pointer text-lg"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item}
+              </h4>
+            )
           ))}
           <div className="w-full flex justify-center pt-4">
-            <Button text={"Register"} />
+            {isLoggedIn ? (
+              <button onClick={() => { dispatch(logout()); setMenuOpen(false); }} className="px-4 py-2">
+                <span className="text-white font-medium">Logout</span>
+              </button>
+            ) : (
+              <Link to="/register" onClick={() => setMenuOpen(false)}>
+                <Button text={"Register"} />
+              </Link>
+            )}
           </div>
         </div>
       </div>
